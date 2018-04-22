@@ -28,7 +28,7 @@ package seki.com.simpleweatherapp.weather.ui.list
 class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
 
     @Inject lateinit var viewModelFactory: ViewModelFactory
-    val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(WeatherListViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(WeatherListViewModel::class.java) }
     lateinit var binding: FragmentWeatherListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
