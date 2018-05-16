@@ -2,10 +2,13 @@ package seki.com.simpleweatherapp.weather.util
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.util.Log
 import javax.inject.Inject
 import javax.inject.Provider
 
-class ViewModelFactory @Inject constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>): ViewModelProvider.Factory {
+class ViewModelFactory @Inject constructor(
+        private val creators: Map<Class<out ViewModel>,
+                @JvmSuppressWildcards Provider<ViewModel>>): ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -23,6 +26,7 @@ class ViewModelFactory @Inject constructor(private val creators: Map<Class<out V
         try {
             return creator.get() as T
         } catch (e: Exception) {
+            Log.d("error", e.message)
             throw RuntimeException()
         }
     }

@@ -12,13 +12,18 @@ import seki.com.simpleweatherapp.weather.Weather
 import seki.com.simpleweatherapp.weather.domain.entity.WeatherEntity
 import seki.com.simpleweatherapp.weather.api.WeatherService
 import seki.com.simpleweatherapp.weather.domain.ResponseWrapper
+import seki.com.simpleweatherapp.weather.domain.database.AppDataBase
 import seki.com.simpleweatherapp.weather.domain.db.Location
 import seki.com.simpleweatherapp.weather.domain.mapper.WeatherEntityMapper
 import seki.com.simpleweatherapp.weather.util.Locations
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
-class WeatherRepository @Inject constructor(private val service: WeatherService, private val mapper: WeatherEntityMapper)
+class WeatherRepository @Inject constructor(private val service: WeatherService, private val mapper: WeatherEntityMapper, private val db: AppDataBase)
     : Repository {
+
+    val executor: ExecutorService = Executors.newCachedThreadPool()
 
     override fun getSingleWeather(city: String): LiveData<ResponseWrapper<Weather>> {
         val data = MutableLiveData<ResponseWrapper<Weather>>()
@@ -36,7 +41,7 @@ class WeatherRepository @Inject constructor(private val service: WeatherService,
         return data
     }
 
-    override fun getAreaData(): LiveData<List<Location>> {
+    override fun storeLocation() {
         val data: MutableLiveData<List<Location>> = MutableLiveData()
         service.getAreaXml().enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -46,10 +51,18 @@ class WeatherRepository @Inject constructor(private val service: WeatherService,
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val xml = response.body()?.string() ?: throw IllegalStateException("body is null")
                 val result = Locations.expandLocationXml(xml)
-                data.postValue(result)
+                executor.submit { db.locationDao().insert(result) }
             }
 
         })
+    }
+
+    override fun getLocation(): LiveData<List<Location>> {
+        val data: MutableLiveData<List<Location>> = MutableLiveData()
+        executor.execute {
+            val locations = db.locationDao().selectAllLocation()
+            data.postValue(locations)
+        }
         return data
     }
 }
