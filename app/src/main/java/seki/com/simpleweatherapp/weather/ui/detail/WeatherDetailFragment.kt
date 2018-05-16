@@ -12,7 +12,6 @@ import android.widget.Toast
 import seki.com.simpleweatherapp.R
 import seki.com.simpleweatherapp.databinding.FragmentWeatherDetailBinding
 import seki.com.simpleweatherapp.weather.Weather
-import seki.com.simpleweatherapp.weather.WeatherApplication
 import seki.com.simpleweatherapp.weather.di.DaggerAppComponent
 import seki.com.simpleweatherapp.weather.di.WeatherApiModule
 import seki.com.simpleweatherapp.weather.domain.ResponseWrapper
@@ -28,7 +27,10 @@ class WeatherDetailFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (context.applicationContext as WeatherApplication).getAppComponent().inject(this)
+        DaggerAppComponent.builder()
+                .weatherApiModule(WeatherApiModule())
+                .build()
+                .inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

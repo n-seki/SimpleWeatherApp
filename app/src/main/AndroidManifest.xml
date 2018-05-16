@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
-        android:name=".weather.WeatherApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,11 +26,6 @@
             android:name=".weather.ui.detail.WeatherDetailActivity"
             android:label="@string/detail_screen_name"
             android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name=".weather.ui.addLocation.AddLocationActivity"
-            android:label="@string/add_location_screen"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
     </application>
 
 </manifest>

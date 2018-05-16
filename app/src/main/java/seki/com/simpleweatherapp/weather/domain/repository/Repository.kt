@@ -7,6 +7,5 @@ import seki.com.simpleweatherapp.weather.domain.db.Location
 
 interface Repository {
     fun getSingleWeather(city: String): LiveData<ResponseWrapper<Weather>>
-    fun storeLocation()
-    fun getLocation(): LiveData<List<Location>>
+    fun getAreaData(): LiveData<List<Location>>
 }
