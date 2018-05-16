@@ -1,7 +1,6 @@
 package seki.com.simpleweatherapp.weather.ui.list
 
 import android.arch.lifecycle.*
-import android.util.Log
 import seki.com.simpleweatherapp.weather.Weather
 import seki.com.simpleweatherapp.weather.domain.ResponseWrapper
 import seki.com.simpleweatherapp.weather.domain.repository.WeatherRepository
@@ -62,5 +61,7 @@ class WeatherListViewModel @Inject constructor(private val repo: WeatherReposito
         load(cities, mediator, weathers, resultListDataList, position + 1)
     }
 
-    fun getLocation() = repo.getAreaData()
+    fun storeLocation() {
+        repo.storeLocation()
+    }
 }

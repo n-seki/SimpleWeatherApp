@@ -2,13 +2,18 @@ package seki.com.simpleweatherapp.weather
 
 import android.app.SearchManager
 import android.app.Service
+import android.arch.persistence.room.Room
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 import seki.com.simpleweatherapp.R
+import seki.com.simpleweatherapp.weather.domain.database.AppDataBase
+import seki.com.simpleweatherapp.weather.ui.addLocation.AddLocationActivity
 import seki.com.simpleweatherapp.weather.ui.detail.WeatherDetailActivity
 import seki.com.simpleweatherapp.weather.ui.list.WeatherListFragment
 
@@ -26,6 +31,9 @@ class MainActivity: AppCompatActivity() {
             val fragment = WeatherListFragment.getInstance()
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment, WeatherListFragment.TAG).commit()
         }
+
+        val fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener { showAddLocationScreen() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,6 +68,11 @@ class MainActivity: AppCompatActivity() {
 
     fun showDetailScreen(cityId: String) {
         val intent = WeatherDetailActivity.intent(this, cityId)
+        startActivity(intent)
+    }
+
+    fun showAddLocationScreen() {
+        val intent = AddLocationActivity.intent(this)
         startActivity(intent)
     }
 }

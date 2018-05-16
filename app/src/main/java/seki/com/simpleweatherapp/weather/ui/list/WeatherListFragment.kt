@@ -7,18 +7,15 @@ package seki.com.simpleweatherapp.weather.ui.list
  import android.support.v4.app.Fragment
  import android.support.v7.widget.DividerItemDecoration
  import android.support.v7.widget.LinearLayoutManager
- import android.support.v7.widget.RecyclerView
  import android.util.Log
  import android.view.LayoutInflater
  import android.view.View
  import android.view.ViewGroup
- import kotlinx.android.synthetic.main.fragment_weather_list.view.*
  import seki.com.simpleweatherapp.R
  import seki.com.simpleweatherapp.databinding.FragmentWeatherListBinding
  import seki.com.simpleweatherapp.weather.MainActivity
  import seki.com.simpleweatherapp.weather.Weather
- import seki.com.simpleweatherapp.weather.di.DaggerAppComponent
- import seki.com.simpleweatherapp.weather.di.WeatherApiModule
+ import seki.com.simpleweatherapp.weather.WeatherApplication
  import seki.com.simpleweatherapp.weather.domain.ResponseWrapper
  import seki.com.simpleweatherapp.weather.domain.db.Location
  import seki.com.simpleweatherapp.weather.util.Locations
@@ -34,11 +31,7 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DaggerAppComponent
-                .builder()
-                .weatherApiModule(WeatherApiModule())
-                .build()
-                .inject(this)
+        (context.applicationContext as WeatherApplication).getAppComponent().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -54,7 +47,7 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.weatherList.observe(this, Observer<List<ResponseWrapper<Weather>>>(this::showWeatherList))
-        viewModel.getLocation().observe(this, Observer<List<Location>> { Log.d("location", it.toString()) })
+        viewModel.storeLocation()
 
         val cities = listOf("110010", "130010", "200010", "040010")
         viewModel.cityList.postValue(cities)
