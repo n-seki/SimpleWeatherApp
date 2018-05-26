@@ -5,9 +5,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ExpandableListView
 import android.widget.SimpleExpandableListAdapter
 import seki.com.simpleweatherapp.R
 import seki.com.simpleweatherapp.databinding.FragmentLocationListBinding
@@ -48,7 +50,21 @@ class AddLocationFragment: Fragment() {
     }
 
     private fun showLocationList(list: List<Location>?) {
-        list?.run { binder.locationList.setAdapter(makeExpandableListAdapter(this)) }
+        list?.run {
+            binder.locationList.setAdapter(makeExpandableListAdapter(this))
+            binder.locationList.setOnChildClickListener(clickListener)
+        }
+    }
+
+    private val clickListener =
+            ExpandableListView.OnChildClickListener {
+                parent, v, groupPosition, childPosition, id -> onClickCity(parent, groupPosition, childPosition) }
+
+    private fun onClickCity(listView: ExpandableListView, groupPosition: Int, childPosition: Int):Boolean {
+        val adapter = listView.expandableListAdapter
+        val clickedCity = adapter.getChild(groupPosition, childPosition)
+        Log.d("click item", clickedCity.toString())
+        return true
     }
 
     private fun makeExpandableListAdapter(data: List<Location>): SimpleExpandableListAdapter {
