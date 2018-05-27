@@ -40,7 +40,7 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
         val deco = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         binding.weatherList.addItemDecoration(deco)
         binding.weatherList.layoutManager = layoutManager
-        binding.weatherList.adapter = WeatherListAdapter(context, listOf(), this)
+        binding.weatherList.adapter = WeatherListAdapter(listOf(), this)
         return this.binding.root
     }
 

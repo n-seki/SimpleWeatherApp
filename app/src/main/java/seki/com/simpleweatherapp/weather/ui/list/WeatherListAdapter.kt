@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import seki.com.simpleweatherapp.R
 import seki.com.simpleweatherapp.weather.Weather
 
-class WeatherListAdapter(private val context: Context, data: List<Weather>, private val listener: ItemClickListener): RecyclerView.Adapter<WViewHolder>() {
+class WeatherListAdapter(data: List<Weather>, private val listener: ItemClickListener): RecyclerView.Adapter<WViewHolder>() {
 
     var data: List<Weather> = data
         set(weathers) {
@@ -26,9 +26,9 @@ class WeatherListAdapter(private val context: Context, data: List<Weather>, priv
 
     override fun getItemCount() = data.size
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): WViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WViewHolder {
         val view = LayoutInflater
-                .from(context)
+                .from(parent.context)
                 .inflate(R.layout.layout_weather_list_item, parent, false)
         return WViewHolder(view)
     }
