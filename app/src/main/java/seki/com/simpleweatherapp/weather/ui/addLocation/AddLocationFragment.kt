@@ -52,13 +52,12 @@ class AddLocationFragment: Fragment() {
     private fun showLocationList(list: List<Location>?) {
         list?.run {
             binder.locationList.setAdapter(makeExpandableListAdapter(this))
-            binder.locationList.setOnChildClickListener(clickListener)
+            binder.locationList.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
+                parent?.run {onClickCity(this, groupPosition, childPosition)}
+                true
+            }
         }
     }
-
-    private val clickListener =
-            ExpandableListView.OnChildClickListener {
-                parent, v, groupPosition, childPosition, id -> onClickCity(parent, groupPosition, childPosition) }
 
     private fun onClickCity(listView: ExpandableListView, groupPosition: Int, childPosition: Int):Boolean {
         val adapter = listView.expandableListAdapter
