@@ -61,8 +61,8 @@ class AddLocationFragment: Fragment() {
 
     private fun onClickCity(listView: ExpandableListView, groupPosition: Int, childPosition: Int):Boolean {
         val adapter = listView.expandableListAdapter
-        val clickedCity = adapter.getChild(groupPosition, childPosition)
-        Log.d("click item", clickedCity.toString())
+        val childItem = adapter.getChild(groupPosition, childPosition) as Map<*, *>
+        Log.d("clicked city id", childItem["cityId"] as String?)
         return true
     }
 
@@ -96,7 +96,7 @@ class AddLocationFragment: Fragment() {
         for (cityList in cityMap.values) {
             val oneChildList = mutableListOf<Map<String, String>>()
             for (city in cityList) {
-                val map = mapOf("cityName" to city.cityName)
+                val map = mapOf("cityName" to city.cityName, "cityId" to city.id)
                 oneChildList += map
             }
             childList += oneChildList
