@@ -40,6 +40,7 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
         val deco = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         binding.weatherList.addItemDecoration(deco)
         binding.weatherList.layoutManager = layoutManager
+        binding.weatherList.adapter = WeatherListAdapter(context, listOf(), this)
         return this.binding.root
     }
 
@@ -59,8 +60,7 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
                     .filter { response -> response.isSuccess() }
                     .map { response -> response.result ?: throw IllegalStateException("Response result is null!") }
 
-            val adapter = WeatherListAdapter(context, weathers, this)
-            binding.weatherList.adapter = adapter
+            (binding.weatherList.adapter as WeatherListAdapter).data = weathers
         }
     }
 
