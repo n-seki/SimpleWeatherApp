@@ -14,7 +14,6 @@ class WeatherListViewModel @Inject constructor(private val repo: WeatherReposito
         weatherList = Transformations.switchMap(cityList, this::loadWeatherList)
     }
 
-
     private fun loadWeatherList(cities: List<String>): LiveData<List<ResponseWrapper<Weather>>> {
         val resultListDataList = MutableLiveData<List<ResponseWrapper<Weather>>>()
         val mediator: MediatorLiveData<ResponseWrapper<Weather>> = MediatorLiveData()
@@ -35,7 +34,7 @@ class WeatherListViewModel @Inject constructor(private val repo: WeatherReposito
 
         val city = cities[position]
         val weatherResponse = repo.getSingleWeather(city)
-        mediator.observeForever {  }
+        mediator.observeForever { }
         mediator.addSource(weatherResponse) { response -> nextLoadOrPost(response, position, cities, mediator, weathers, resultListDataList) }
     }
 
