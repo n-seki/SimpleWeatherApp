@@ -35,12 +35,13 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        this.binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_list, container, false)
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val deco = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-        binding.weatherList.addItemDecoration(deco)
-        binding.weatherList.layoutManager = layoutManager
-        binding.weatherList.adapter = WeatherListAdapter(listOf(), this)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_list, container, false)
+        binding.weatherList.apply {
+            layoutManager = LinearLayoutManager(this@WeatherListFragment.context, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(DividerItemDecoration(this@WeatherListFragment.context, DividerItemDecoration.VERTICAL))
+            adapter = WeatherListAdapter(listOf(), this@WeatherListFragment)
+        }
+
         return this.binding.root
     }
 
