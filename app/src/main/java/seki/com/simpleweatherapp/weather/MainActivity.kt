@@ -31,9 +31,6 @@ class MainActivity: AppCompatActivity() {
             val fragment = WeatherListFragment.getInstance()
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment, WeatherListFragment.TAG).commit()
         }
-
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { showAddLocationScreen() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -68,11 +65,6 @@ class MainActivity: AppCompatActivity() {
 
     fun showDetailScreen(cityId: String) {
         val intent = WeatherDetailActivity.intent(this, cityId)
-        startActivity(intent)
-    }
-
-    fun showAddLocationScreen() {
-        val intent = AddLocationActivity.intent(this)
         startActivity(intent)
     }
 }
