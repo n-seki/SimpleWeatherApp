@@ -25,6 +25,8 @@ class AddLocationFragment: Fragment() {
     private val viewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(AddLocationViewModel::class.java) }
 
+    private lateinit var locations: Map<String, Location>
+
     private lateinit var binder: FragmentLocationListBinding
 
     companion object {
@@ -51,6 +53,7 @@ class AddLocationFragment: Fragment() {
 
     private fun showLocationList(list: List<Location>?) {
         list?.run {
+            locations = this.associateBy { it.id }
             binder.locationList.setAdapter(makeExpandableListAdapter(this))
             binder.locationList.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
                 parent?.run {onClickCity(this, groupPosition, childPosition)}
@@ -62,7 +65,8 @@ class AddLocationFragment: Fragment() {
     private fun onClickCity(listView: ExpandableListView, groupPosition: Int, childPosition: Int):Boolean {
         val adapter = listView.expandableListAdapter
         val childItem = adapter.getChild(groupPosition, childPosition) as Map<*, *>
-        Log.d("clicked city id", childItem["cityId"] as String?)
+        val cityId = childItem["cityId"] as String?
+        locations[cityId]?.run { Log.d("city",this.toString()) }
         return true
     }
 
