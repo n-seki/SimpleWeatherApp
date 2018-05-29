@@ -20,24 +20,15 @@ import javax.inject.Inject
 
 class AddLocationFragment: Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(AddLocationViewModel::class.java) }
-
     private lateinit var locations: Map<String, Location>
 
     private lateinit var binder: FragmentLocationListBinding
 
+    private lateinit var viewModel: AddLocationViewModel
+
     companion object {
         fun getInstance() = AddLocationFragment()
         const val TAG = "add location"
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        (context.applicationContext as WeatherApplication).getAppComponent().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,6 +39,7 @@ class AddLocationFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel = (activity as AddLocationActivity).getAddLocationViewModel()
         viewModel.getLocationList().observe(this, Observer { showLocationList(it) })
     }
 
@@ -66,7 +58,10 @@ class AddLocationFragment: Fragment() {
         val adapter = listView.expandableListAdapter
         val childItem = adapter.getChild(groupPosition, childPosition) as Map<*, *>
         val cityId = childItem["cityId"] as String?
-        locations[cityId]?.run { Log.d("city",this.toString()) }
+        cityId?.run {
+            viewModel.addLocation(cityId)
+        }
+
         return true
     }
 

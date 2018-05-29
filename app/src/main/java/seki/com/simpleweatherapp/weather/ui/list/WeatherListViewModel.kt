@@ -3,15 +3,16 @@ package seki.com.simpleweatherapp.weather.ui.list
 import android.arch.lifecycle.*
 import seki.com.simpleweatherapp.weather.Weather
 import seki.com.simpleweatherapp.weather.domain.ResponseWrapper
+import seki.com.simpleweatherapp.weather.domain.repository.Repository
 import seki.com.simpleweatherapp.weather.domain.repository.WeatherRepository
 import javax.inject.Inject
 
 class WeatherListViewModel @Inject constructor(private val repo: WeatherRepository): ViewModel() {
-    val cityList = MutableLiveData<List<String>>()
+    private val cityIdList = MutableLiveData<List<String>>()
     val weatherList: LiveData<List<ResponseWrapper<Weather>>>
 
     init {
-        weatherList = Transformations.switchMap(cityList, this::loadWeatherList)
+        weatherList = Transformations.switchMap(cityIdList, this::loadWeatherList)
     }
 
     private fun loadWeatherList(cities: List<String>): LiveData<List<ResponseWrapper<Weather>>> {
@@ -62,5 +63,13 @@ class WeatherListViewModel @Inject constructor(private val repo: WeatherReposito
 
     fun storeLocation() {
         repo.storeLocation()
+    }
+
+    fun update() {
+        repo.getSelectedCityId(object : Repository.LoadSelectedCityCallback {
+            override fun loadSelectedCity(cityList: List<String>) {
+                cityIdList.postValue(cityList)
+            }
+        })
     }
 }

@@ -65,4 +65,20 @@ class WeatherRepository @Inject constructor(private val service: WeatherService,
         }
         return data
     }
+
+    override fun addLocation(location: Location, callback: Repository.CompleteAddLocationCallback) {
+        executor.execute {
+            db.locationDao().update(location)
+            callback.onCompleteAddLocation()
+        }
+    }
+
+    override fun getSelectedCityId(callback: Repository.LoadSelectedCityCallback) {
+        executor.execute {
+            val selectedCityList = db.locationDao().getSelectedCityId()
+            if (selectedCityList.isNotEmpty()) {
+                callback.loadSelectedCity(selectedCityList)
+            }
+        }
+    }
 }

@@ -8,21 +8,10 @@ import java.io.StringReader
 
 object Locations {
 
-    private val mLocalsOrg: MutableMap<String, String> = mutableMapOf()
+    lateinit var mLocalsOrg: Map<String, String>
 
     val locals: Map<String, String>
         get() = mLocalsOrg
-
-    init {
-        setTestData()
-    }
-
-    private fun setTestData() {
-        mLocalsOrg.put("さいたま", "110010")
-        mLocalsOrg.put("東京", "110010")
-        mLocalsOrg.put("長野", "200010")
-        mLocalsOrg.put("仙台", "040010")
-    }
 
 
     fun expandLocationXml(xmlString: String): List<Location> {
@@ -83,7 +72,8 @@ object Locations {
                         val location = Location(
                                 id = cityId,
                                 prefName = prefName,
-                                cityName = cityName)
+                                cityName = cityName,
+                                selected = 0)
 
                         locations += location
                     }
@@ -94,6 +84,7 @@ object Locations {
                 eventType = parser.next()
             }
 
+            mLocalsOrg = locations.associate { (it.cityName to it.id) }
             return locations
         }
 

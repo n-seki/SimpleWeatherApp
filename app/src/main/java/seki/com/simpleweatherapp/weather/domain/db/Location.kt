@@ -8,5 +8,6 @@ import android.arch.persistence.room.PrimaryKey
 data class Location(
         @PrimaryKey val id: String,
         @ColumnInfo(name="pref_name") val prefName: String,
-        @ColumnInfo(name="city_name") val cityName: String
+        @ColumnInfo(name="city_name") val cityName: String,
+        @ColumnInfo(name="selected") var selected: Int
 )

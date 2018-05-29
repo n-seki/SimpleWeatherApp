@@ -8,7 +8,6 @@ package seki.com.simpleweatherapp.weather.ui.list
  import android.support.v4.app.Fragment
  import android.support.v7.widget.DividerItemDecoration
  import android.support.v7.widget.LinearLayoutManager
- import android.util.Log
  import android.view.LayoutInflater
  import android.view.View
  import android.view.ViewGroup
@@ -18,7 +17,6 @@ package seki.com.simpleweatherapp.weather.ui.list
  import seki.com.simpleweatherapp.weather.Weather
  import seki.com.simpleweatherapp.weather.WeatherApplication
  import seki.com.simpleweatherapp.weather.domain.ResponseWrapper
- import seki.com.simpleweatherapp.weather.domain.db.Location
  import seki.com.simpleweatherapp.weather.ui.addLocation.AddLocationActivity
  import seki.com.simpleweatherapp.weather.util.Locations
  import seki.com.simpleweatherapp.weather.util.ViewModelFactory
@@ -26,15 +24,8 @@ package seki.com.simpleweatherapp.weather.ui.list
 
 class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(WeatherListViewModel::class.java) }
+    lateinit var viewModel: WeatherListViewModel
     lateinit var binding: FragmentWeatherListBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        (context.applicationContext as WeatherApplication).getAppComponent().inject(this)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_list, container, false)
@@ -52,11 +43,8 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
 
         setupFab()
 
+        viewModel = (activity as MainActivity).getWeatherListViewModel()
         viewModel.weatherList.observe(this, Observer<List<ResponseWrapper<Weather>>>(this::showWeatherList))
-        viewModel.storeLocation()
-
-        val cities = listOf("110010", "130010", "200010", "040010")
-        viewModel.cityList.postValue(cities)
     }
 
     private fun setupFab() {
@@ -76,8 +64,7 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
     }
 
     private fun showAddLocationScreen() {
-        val intent = AddLocationActivity.intent(activity)
-        startActivity(intent)
+        (activity as MainActivity).showAddLocationActivity()
     }
 
     override fun onItemClick(weather: Weather) {
