@@ -17,8 +17,8 @@ package seki.com.simpleweatherapp.weather.ui.list
 
 class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
 
-    lateinit var viewModel: WeatherListViewModel
-    lateinit var binding: FragmentWeatherListBinding
+    private lateinit var viewModel: WeatherListViewModel
+    private lateinit var binding: FragmentWeatherListBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_list, container, false)
