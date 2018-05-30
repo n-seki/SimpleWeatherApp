@@ -38,6 +38,7 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
 
         viewModel = (activity as WeatherListActivity).getWeatherListViewModel()
         viewModel.weatherList.observe(this, Observer<List<ResponseWrapper<Weather>>>(this::showWeatherList))
+        viewModel.update()
     }
 
     private fun setupFab() {
