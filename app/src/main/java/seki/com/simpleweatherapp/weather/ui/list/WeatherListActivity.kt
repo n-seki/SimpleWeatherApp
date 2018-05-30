@@ -57,8 +57,6 @@ class WeatherListActivity: AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.d("requestCode", requestCode.toString())
-        Log.d("resultCode", resultCode.toString())
         if (requestCode == REQUEST_ADD_LOCATION) {
             if (resultCode == AddLocationActivity.ADD_SUCCESS) {
                 viewModel.update()
