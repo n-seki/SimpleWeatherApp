@@ -18,7 +18,7 @@ import seki.com.simpleweatherapp.weather.ui.detail.WeatherDetailActivity
 import seki.com.simpleweatherapp.weather.util.ViewModelFactory
 import javax.inject.Inject
 
-class MainActivity: AppCompatActivity() {
+class WeatherListActivity: AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

@@ -36,7 +36,7 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
 
         setupFab()
 
-        viewModel = (activity as MainActivity).getWeatherListViewModel()
+        viewModel = (activity as WeatherListActivity).getWeatherListViewModel()
         viewModel.weatherList.observe(this, Observer<List<ResponseWrapper<Weather>>>(this::showWeatherList))
     }
 
@@ -57,11 +57,11 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
     }
 
     private fun showAddLocationScreen() {
-        (activity as MainActivity).showAddLocationActivity()
+        (activity as WeatherListActivity).showAddLocationActivity()
     }
 
     override fun onItemClick(weather: Weather) {
-        (activity as MainActivity).showDetailScreen(weather.local.id)
+        (activity as WeatherListActivity).showDetailScreen(weather.local.id)
     }
 
     companion object {
