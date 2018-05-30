@@ -1,7 +1,6 @@
 package seki.com.simpleweatherapp.weather.ui.list
 
  import android.arch.lifecycle.Observer
- import android.arch.lifecycle.ViewModelProviders
  import android.databinding.DataBindingUtil
  import android.os.Bundle
  import android.support.design.widget.FloatingActionButton
@@ -13,14 +12,8 @@ package seki.com.simpleweatherapp.weather.ui.list
  import android.view.ViewGroup
  import seki.com.simpleweatherapp.R
  import seki.com.simpleweatherapp.databinding.FragmentWeatherListBinding
- import seki.com.simpleweatherapp.weather.MainActivity
  import seki.com.simpleweatherapp.weather.Weather
- import seki.com.simpleweatherapp.weather.WeatherApplication
  import seki.com.simpleweatherapp.weather.domain.ResponseWrapper
- import seki.com.simpleweatherapp.weather.ui.addLocation.AddLocationActivity
- import seki.com.simpleweatherapp.weather.util.Locations
- import seki.com.simpleweatherapp.weather.util.ViewModelFactory
- import javax.inject.Inject
 
 class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
 

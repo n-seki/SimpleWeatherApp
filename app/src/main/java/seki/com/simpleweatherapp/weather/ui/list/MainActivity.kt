@@ -1,4 +1,4 @@
-package seki.com.simpleweatherapp.weather
+package seki.com.simpleweatherapp.weather.ui.list
 
 import android.app.SearchManager
 import android.app.Service
@@ -12,10 +12,9 @@ import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import seki.com.simpleweatherapp.R
+import seki.com.simpleweatherapp.weather.WeatherApplication
 import seki.com.simpleweatherapp.weather.ui.addLocation.AddLocationActivity
 import seki.com.simpleweatherapp.weather.ui.detail.WeatherDetailActivity
-import seki.com.simpleweatherapp.weather.ui.list.WeatherListFragment
-import seki.com.simpleweatherapp.weather.ui.list.WeatherListViewModel
 import seki.com.simpleweatherapp.weather.util.ViewModelFactory
 import javax.inject.Inject
 
@@ -89,7 +88,7 @@ class MainActivity: AppCompatActivity() {
 
     fun showAddLocationActivity() {
         val intent = AddLocationActivity.intent(this)
-        startActivityForResult(intent, MainActivity.REQUEST_ADD_LOCATION)
+        startActivityForResult(intent, REQUEST_ADD_LOCATION)
     }
 
     fun getWeatherListViewModel() = viewModel
