@@ -11,6 +11,7 @@ interface Repository {
     fun getLocation(): LiveData<List<Location>>
     fun addLocation(location: Location, callback: CompleteAddLocationCallback)
     fun getSelectedCityId(callback: LoadSelectedCityCallback)
+    fun clearLocation(callback: CompleteClearLocation)
 
     interface LoadSelectedCityCallback {
         fun loadSelectedCity(cityList: List<String>)
@@ -18,5 +19,9 @@ interface Repository {
 
     interface CompleteAddLocationCallback {
         fun onCompleteAddLocation()
+    }
+
+    interface CompleteClearLocation {
+        fun onClearLocation()
     }
 }

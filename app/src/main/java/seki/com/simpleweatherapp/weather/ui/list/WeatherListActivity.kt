@@ -8,8 +8,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import seki.com.simpleweatherapp.R
 import seki.com.simpleweatherapp.weather.WeatherApplication
@@ -55,6 +55,17 @@ class WeatherListActivity: AppCompatActivity() {
 
         return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem) =
+        when(item.itemId) {
+            R.id.action_clear -> {
+                viewModel.clear()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_ADD_LOCATION) {

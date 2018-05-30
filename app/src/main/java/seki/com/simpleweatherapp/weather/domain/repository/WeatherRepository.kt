@@ -79,4 +79,11 @@ class WeatherRepository @Inject constructor(private val service: WeatherService,
             }
         }
     }
+
+    override fun clearLocation(callback: Repository.CompleteClearLocation) {
+        executor.execute {
+            db.locationDao().clearAllSelected()
+            callback.onClearLocation()
+        }
+    }
 }

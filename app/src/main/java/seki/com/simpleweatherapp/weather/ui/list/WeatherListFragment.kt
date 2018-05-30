@@ -48,7 +48,12 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
     }
 
     private fun showWeatherList(list: List<ResponseWrapper<Weather>>?) {
-        list?.let { responseList ->
+        if (list == null || list.isEmpty()) {
+            (binding.weatherList.adapter as WeatherListAdapter).data = listOf()
+            return
+        }
+
+        list.let { responseList ->
             val weathers = responseList
                     .filter { response -> response.isSuccess() }
                     .map { response -> response.result ?: throw IllegalStateException("Response result is null!") }

@@ -20,10 +20,12 @@ class WeatherListViewModel @Inject constructor(private val repo: WeatherReposito
         val mediator: MediatorLiveData<ResponseWrapper<Weather>> = MediatorLiveData()
         val weathers: MutableList<ResponseWrapper<Weather>> = mutableListOf()
 
-        if (cities.isNotEmpty()) {
-            load(cities, mediator, weathers, resultListDataList, 0)
+        if (cities.isEmpty()) {
+            resultListDataList.postValue(listOf())
+            return resultListDataList
         }
 
+        load(cities, mediator, weathers, resultListDataList, 0)
         return resultListDataList
     }
 
@@ -71,5 +73,14 @@ class WeatherListViewModel @Inject constructor(private val repo: WeatherReposito
                 cityIdList.postValue(cityList)
             }
         })
+    }
+
+    fun clear() {
+        repo.clearLocation(object : Repository.CompleteClearLocation {
+            override fun onClearLocation() {
+                cityIdList.postValue(listOf())
+            }
+        })
+
     }
 }

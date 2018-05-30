@@ -17,4 +17,7 @@ interface LocationDao {
 
     @Query("SELECT * FROM location ORDER BY id")
     fun selectAllLocation(): List<Location>
+
+    @Query("UPDATE location SET selected = 0")
+    fun clearAllSelected()
 }
