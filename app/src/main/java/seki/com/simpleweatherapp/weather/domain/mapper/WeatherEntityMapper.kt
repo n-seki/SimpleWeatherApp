@@ -6,8 +6,8 @@ import seki.com.simpleweatherapp.weather.domain.entity.WeatherEntity
 
 
 class WeatherEntityMapper {
-    fun convert(entity: WeatherEntity): Weather {
-        val location = Location(entity.location.area, entity.location.prefecture, entity.location.city)
+    fun convert(entity: WeatherEntity, cityId: String): Weather {
+        val location = Location(cityId, entity.location.area, entity.location.prefecture, entity.location.city)
         return Weather(entity.forecasts[0].telop, entity.description.text, location)
     }
 }

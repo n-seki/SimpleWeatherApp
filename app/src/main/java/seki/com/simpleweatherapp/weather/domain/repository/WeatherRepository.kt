@@ -1,9 +1,7 @@
 package seki.com.simpleweatherapp.weather.domain.repository
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
-import android.util.Log
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,11 +23,11 @@ class WeatherRepository @Inject constructor(private val service: WeatherService,
 
     val executor: ExecutorService = Executors.newCachedThreadPool()
 
-    override fun getSingleWeather(city: String): LiveData<ResponseWrapper<Weather>> {
+    override fun getSingleWeather(cityId: String): LiveData<ResponseWrapper<Weather>> {
         val data = MutableLiveData<ResponseWrapper<Weather>>()
-        service.singleWeather(city).enqueue(object : Callback<WeatherEntity> {
+        service.singleWeather(cityId).enqueue(object : Callback<WeatherEntity> {
             override fun onResponse(call: Call<WeatherEntity>, response: Response<WeatherEntity>) {
-                val weather = mapper.convert(response.body()!!)
+                val weather = mapper.convert(response.body()!!, cityId)
                 data.postValue(ResponseWrapper(result = weather, error = null))
             }
 
