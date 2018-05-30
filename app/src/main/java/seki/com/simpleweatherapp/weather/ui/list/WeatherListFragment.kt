@@ -68,8 +68,7 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
     }
 
     override fun onItemClick(weather: Weather) {
-        val cityId: String = Locations.locals[weather.local.city] ?: throw IllegalStateException(weather.local.city)
-        (activity as MainActivity).showDetailScreen(cityId)
+        (activity as MainActivity).showDetailScreen(weather.local.id)
     }
 
     companion object {

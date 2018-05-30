@@ -8,12 +8,6 @@ import java.io.StringReader
 
 object Locations {
 
-    lateinit var mLocalsOrg: Map<String, String>
-
-    val locals: Map<String, String>
-        get() = mLocalsOrg
-
-
     fun expandLocationXml(xmlString: String): List<Location> {
 
         BufferedReader(StringReader(xmlString)).use {
@@ -84,7 +78,6 @@ object Locations {
                 eventType = parser.next()
             }
 
-            mLocalsOrg = locations.associate { (it.cityName to it.id) }
             return locations
         }
 
