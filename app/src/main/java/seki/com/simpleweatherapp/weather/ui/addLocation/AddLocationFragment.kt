@@ -1,11 +1,9 @@
 package seki.com.simpleweatherapp.weather.ui.addLocation
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +11,9 @@ import android.widget.ExpandableListView
 import android.widget.SimpleExpandableListAdapter
 import seki.com.simpleweatherapp.R
 import seki.com.simpleweatherapp.databinding.FragmentLocationListBinding
-import seki.com.simpleweatherapp.weather.WeatherApplication
 import seki.com.simpleweatherapp.weather.domain.db.Location
-import seki.com.simpleweatherapp.weather.util.ViewModelFactory
-import javax.inject.Inject
 
-class AddLocationFragment: Fragment() {
+class AddLocationFragment: Fragment(), AddLocationConfirmDialog.DialogClickListener {
 
     private lateinit var locations: Map<String, Location>
 
@@ -57,12 +52,17 @@ class AddLocationFragment: Fragment() {
     private fun onClickCity(listView: ExpandableListView, groupPosition: Int, childPosition: Int):Boolean {
         val adapter = listView.expandableListAdapter
         val childItem = adapter.getChild(groupPosition, childPosition) as Map<*, *>
+        val cityName = childItem["cityName"] as String?
         val cityId = childItem["cityId"] as String?
-        cityId?.run {
-            viewModel.addLocation(cityId)
+        if (cityId != null && cityName != null) {
+            showDialog(cityId, cityName)
         }
-
         return true
+    }
+
+    private fun showDialog(cityId: String, cityName: String) {
+        AddLocationConfirmDialog.newInstance(cityId, cityName)
+                .show(childFragmentManager, "confirm")
     }
 
     private fun makeExpandableListAdapter(data: List<Location>): SimpleExpandableListAdapter {
@@ -101,5 +101,9 @@ class AddLocationFragment: Fragment() {
             childList += oneChildList
         }
         return childList
+    }
+
+    override fun onClickConfirm(cityId: String) {
+        viewModel.addLocation(cityId)
     }
 }
