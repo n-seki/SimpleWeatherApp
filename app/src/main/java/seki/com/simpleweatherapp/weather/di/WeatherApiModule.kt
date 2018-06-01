@@ -6,7 +6,6 @@ import dagger.Module
 import dagger.Provides
 import seki.com.simpleweatherapp.weather.api.WeatherService
 import seki.com.simpleweatherapp.weather.domain.database.AppDataBase
-import seki.com.simpleweatherapp.weather.domain.repository.Repository
 import seki.com.simpleweatherapp.weather.domain.mapper.WeatherEntityMapper
 import seki.com.simpleweatherapp.weather.domain.repository.WeatherRepository
 import javax.inject.Singleton
@@ -20,7 +19,7 @@ class WeatherApiModule {
 
     @Provides
     @Singleton
-    fun getWeatherRepository(service: WeatherService, mapper: WeatherEntityMapper, dataBase: AppDataBase): Repository
+    fun getWeatherRepository(service: WeatherService, mapper: WeatherEntityMapper, dataBase: AppDataBase): WeatherRepository
             = WeatherRepository(service, mapper, dataBase)
 
     @Provides
