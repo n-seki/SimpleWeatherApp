@@ -42,7 +42,7 @@ class AddLocationFragment: Fragment(), AddLocationConfirmDialog.DialogClickListe
         list?.run {
             locations = this.associateBy { it.id }
             binder.locationList.setAdapter(makeExpandableListAdapter(this))
-            binder.locationList.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
+            binder.locationList.setOnChildClickListener { parent, _, groupPosition, childPosition, _ ->
                 parent?.run {onClickCity(this, groupPosition, childPosition)}
                 true
             }

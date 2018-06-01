@@ -47,6 +47,6 @@ class AddLocationConfirmDialog: DialogFragment() {
                 .setPositiveButton(R.string.ok, { _: DialogInterface?, _: Int ->  listener.onClickConfirm(cityId) })
                 .setNegativeButton(R.string.cancel, { dialog: DialogInterface?, _: Int -> dialog?.dismiss() })
 
-            return builder.create()
+        return builder.create()
     }
 }
