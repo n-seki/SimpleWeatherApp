@@ -18,7 +18,7 @@ import seki.com.simpleweatherapp.weather.ui.detail.WeatherDetailActivity
 import seki.com.simpleweatherapp.weather.util.ViewModelFactory
 import javax.inject.Inject
 
-class WeatherListActivity: AppCompatActivity() {
+class WeatherListActivity: AppCompatActivity(), ClearConfirmDialog.ClearConfrimListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -59,7 +59,7 @@ class WeatherListActivity: AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) =
         when(item.itemId) {
             R.id.action_clear -> {
-                viewModel.clear()
+                ClearConfirmDialog.newInstance().show(supportFragmentManager, "clear_confirm")
                 true
             }
 
@@ -84,6 +84,10 @@ class WeatherListActivity: AppCompatActivity() {
         override fun onQueryTextChange(newText: String?): Boolean {
             return false
         }
+    }
+
+    override fun onClickClearOk() {
+        viewModel.clear()
     }
 
     fun search(query: String) {
