@@ -17,11 +17,13 @@ class WeatherListAdapter(data: List<Weather>, private val listener: ItemClickLis
 
     interface ItemClickListener {
         fun onItemClick(weather: Weather)
+        fun onItemLongLick(weather: Weather): Boolean
     }
 
     override fun onBindViewHolder(holder: WViewHolder?, position: Int) {
         holder!!.binder.weather = data[position]
         holder.binder.root.setOnClickListener({ listener.onItemClick(data[position] )})
+        holder.binder.root.setOnLongClickListener { listener.onItemLongLick(data[position]) }
     }
 
     override fun getItemCount() = data.size

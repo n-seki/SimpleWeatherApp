@@ -7,6 +7,7 @@ package seki.com.simpleweatherapp.weather.ui.list
  import android.support.v4.app.Fragment
  import android.support.v7.widget.DividerItemDecoration
  import android.support.v7.widget.LinearLayoutManager
+ import android.util.Log
  import android.view.LayoutInflater
  import android.view.View
  import android.view.ViewGroup
@@ -15,7 +16,7 @@ package seki.com.simpleweatherapp.weather.ui.list
  import seki.com.simpleweatherapp.weather.Weather
  import seki.com.simpleweatherapp.weather.domain.ResponseWrapper
 
-class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
+class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener, DeleteConfirmDialog.DeleteConfirmDialogListener {
 
     private lateinit var viewModel: WeatherListViewModel
     private lateinit var binding: FragmentWeatherListBinding
@@ -68,6 +69,15 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener {
 
     override fun onItemClick(weather: Weather) {
         (activity as WeatherListActivity).showDetailScreen(weather.local.id)
+    }
+
+    override fun onItemLongLick(weather: Weather): Boolean {
+        DeleteConfirmDialog.newInstance(weather.local.city).show(childFragmentManager, "delete_city")
+        return true
+    }
+
+    override fun onClickDeleteOk() {
+        Log.d("Delete City", "Click OK")
     }
 
     companion object {
