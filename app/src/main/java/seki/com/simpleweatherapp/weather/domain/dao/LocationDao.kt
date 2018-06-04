@@ -13,6 +13,9 @@ interface LocationDao {
     @Query("UPDATE location set selected = 1 WHERE id = :cityId")
     fun changeToSelected(cityId:String)
 
+    @Query("UPDATE location set selected = 0 WHERE id = :cityId")
+    fun changeToUnSelected(cityId: String)
+
     @Query("SELECT id FROM location WHERE selected = 1")
     fun getSelectedCityId(): List<String>
 

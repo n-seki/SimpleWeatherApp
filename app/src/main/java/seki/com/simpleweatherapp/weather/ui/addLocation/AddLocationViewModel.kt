@@ -21,8 +21,8 @@ class AddLocationViewModel @Inject constructor(private val repo: WeatherReposito
     }
 
     fun addLocation(cityId: String) {
-        repo.addLocation(cityId, object : WeatherRepository.CompleteAddLocationCallback {
-            override fun onCompleteAddLocation() {
+        repo.addLocation(cityId, object : WeatherRepository.CompleteLocationSelectedStatusChanged {
+            override fun onCompleteChanged() {
                 status.postValue(Status.UPDATE)
             }
         })

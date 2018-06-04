@@ -3,7 +3,6 @@ package seki.com.simpleweatherapp.weather.domain.repository
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
-import android.util.Log
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,8 +28,8 @@ class WeatherRepository @Inject constructor(private val service: WeatherService,
         locationListLiveData.addSource(getLocation(), { list -> locationListLiveData.postValue(list)} )
     }
 
-    interface CompleteAddLocationCallback {
-        fun onCompleteAddLocation()
+    interface CompleteLocationSelectedStatusChanged {
+        fun onCompleteChanged()
     }
 
     interface LoadSelectedCityCallback {
@@ -90,10 +89,18 @@ class WeatherRepository @Inject constructor(private val service: WeatherService,
         return mediator
     }
 
-    fun addLocation(cityId: String, callback: CompleteAddLocationCallback) {
+    fun addLocation(cityId: String, selectedStatusChanged: CompleteLocationSelectedStatusChanged) {
         executor.execute {
             db.locationDao().changeToSelected(cityId)
-            callback.onCompleteAddLocation()
+            selectedStatusChanged.onCompleteChanged()
+        }
+    }
+
+    fun deleteLocation(cityId: String, selectedStatusChanged: LoadSelectedCityCallback) {
+        executor.execute {
+            db.locationDao().changeToUnSelected(cityId)
+            val selectedCityList = db.locationDao().getSelectedCityId()
+            selectedStatusChanged.loadSelectedCity(selectedCityList)
         }
     }
 

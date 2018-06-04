@@ -77,6 +77,13 @@ class WeatherListViewModel @Inject constructor(private val repo: WeatherReposito
                 cityIdList.postValue(listOf())
             }
         })
+    }
 
+    fun deleteCity(cityId: String) {
+        repo.deleteLocation(cityId, object : WeatherRepository.LoadSelectedCityCallback {
+            override fun loadSelectedCity(selectedCityIdList: List<String>) {
+                cityIdList.postValue(selectedCityIdList)
+            }
+        })
     }
 }
