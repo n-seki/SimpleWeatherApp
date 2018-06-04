@@ -10,8 +10,8 @@ interface LocationDao {
     @Insert
     fun insert(locations: List<Location>)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(location: Location)
+    @Query("UPDATE location set selected = 1 WHERE id = :cityId")
+    fun changeToSelected(cityId:String)
 
     @Query("SELECT id FROM location WHERE selected = 1")
     fun getSelectedCityId(): List<String>

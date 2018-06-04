@@ -15,7 +15,6 @@ class AddLocationViewModel @Inject constructor(private val repo: WeatherReposito
         UPDATE
     }
 
-    private var locations: LiveData<List<Location>> = MutableLiveData()
     val status: MutableLiveData<Status> = MutableLiveData()
 
     fun getLocationList(): LiveData<List<Location>> {
@@ -23,9 +22,7 @@ class AddLocationViewModel @Inject constructor(private val repo: WeatherReposito
     }
 
     fun addLocation(cityId: String) {
-        val city = locations.value?.associateBy { it.id }?.get(cityId) ?: return
-        city.selected = 1
-        repo.addLocation(city, object : WeatherRepository.CompleteAddLocationCallback {
+        repo.addLocation(cityId, object : WeatherRepository.CompleteAddLocationCallback {
             override fun onCompleteAddLocation() {
                 status.postValue(Status.UPDATE)
             }

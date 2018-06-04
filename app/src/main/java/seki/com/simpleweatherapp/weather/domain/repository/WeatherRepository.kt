@@ -90,9 +90,9 @@ class WeatherRepository @Inject constructor(private val service: WeatherService,
         return mediator
     }
 
-    fun addLocation(location: Location, callback: CompleteAddLocationCallback) {
+    fun addLocation(cityId: String, callback: CompleteAddLocationCallback) {
         executor.execute {
-            db.locationDao().update(location)
+            db.locationDao().changeToSelected(cityId)
             callback.onCompleteAddLocation()
         }
     }
