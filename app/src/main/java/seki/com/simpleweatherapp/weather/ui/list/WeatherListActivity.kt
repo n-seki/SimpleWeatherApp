@@ -31,7 +31,7 @@ class WeatherListActivity: AppCompatActivity(), ClearConfirmDialog.ClearConfrimL
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        (applicationContext as WeatherApplication).getAppComponent().inject(this)
+        (applicationContext as WeatherApplication).applicationComponent.inject(this)
 
         setSupportActionBar(mToolbar)
 

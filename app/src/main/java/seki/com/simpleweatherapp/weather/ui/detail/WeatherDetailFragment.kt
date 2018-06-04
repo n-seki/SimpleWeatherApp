@@ -28,7 +28,7 @@ class WeatherDetailFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (context.applicationContext as WeatherApplication).getAppComponent().inject(this)
+        (context.applicationContext as WeatherApplication).applicationComponent.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

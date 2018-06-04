@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [(WeatherAppModule::class), (WeatherApiModule::class), (ViewModelModule::class)])
-internal interface AppComponent {
+interface AppComponent {
   fun inject(fragment: WeatherDetailFragment)
   fun inject(activity: WeatherListActivity)
   fun inject(activity: AddLocationActivity)

@@ -8,16 +8,10 @@ import seki.com.simpleweatherapp.weather.di.WeatherAppModule
 
 class WeatherApplication: Application() {
 
-    private lateinit var applicationComponent: AppComponent
-
-    override fun onCreate() {
-        super.onCreate()
-
-        applicationComponent = DaggerAppComponent.builder()
-                .weatherApiModule(WeatherApiModule())
-                .weatherAppModule(WeatherAppModule(this))
-                .build()
+    val applicationComponent: AppComponent by lazy {
+        DaggerAppComponent.builder()
+            .weatherApiModule(WeatherApiModule())
+            .weatherAppModule(WeatherAppModule(this))
+            .build()
     }
-
-    internal fun getAppComponent() = applicationComponent
 }

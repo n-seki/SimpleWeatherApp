@@ -24,7 +24,7 @@ class AddLocationActivity: AppCompatActivity() {
         setContentView(R.layout.activity_add_location)
 
 
-        (applicationContext as WeatherApplication).getAppComponent().inject(this)
+        (applicationContext as WeatherApplication).applicationComponent.inject(this)
 
         if (savedInstanceState == null) {
             val fragment = AddLocationFragment.getInstance()
