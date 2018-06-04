@@ -3,7 +3,6 @@ package seki.com.simpleweatherapp.weather.ui.addLocation
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import seki.com.simpleweatherapp.weather.di.WeatherAppModule
 import seki.com.simpleweatherapp.weather.domain.db.Location
 import seki.com.simpleweatherapp.weather.domain.repository.WeatherRepository
 import javax.inject.Inject
