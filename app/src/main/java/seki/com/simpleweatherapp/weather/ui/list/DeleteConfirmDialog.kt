@@ -38,7 +38,7 @@ class DeleteConfirmDialog: DialogFragment() {
         val cityName: String = arguments.getString(CITY_NAME)
 
         return AlertDialog.Builder(activity)
-                .setMessage("${cityName}を削除しますか？")
+                .setMessage(context.getString(R.string.delete).format(cityName))
                 .setPositiveButton(R.string.ok, { _ , _  ->  viewModel.deleteCity(cityId) })
                 .setNegativeButton(R.string.cancel, { _, _ -> dismiss() })
                 .create()

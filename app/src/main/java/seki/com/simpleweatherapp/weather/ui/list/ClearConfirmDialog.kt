@@ -22,7 +22,7 @@ class ClearConfirmDialog: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(activity)
-                .setMessage("登録した地域をすべてクリアしますか？")
+                .setMessage(context.getString(R.string.clear_all_city))
                 .setPositiveButton(R.string.ok, { _, _ -> viewModel.clear() })
                 .setNegativeButton(R.string.cancel, { _ , _ -> dismiss() })
                 .create()

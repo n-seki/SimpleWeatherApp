@@ -38,7 +38,7 @@ class AddLocationConfirmDialog: DialogFragment() {
         val cityName = arguments.getString(CITY_NAME)
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-                .setMessage("${cityName}を追加しますか？")
+                .setMessage(context.getString(R.string.add).format(cityName))
                 .setPositiveButton(R.string.ok, { _: DialogInterface?, _: Int ->  viewModel.addLocation(cityId) })
                 .setNegativeButton(R.string.cancel, { dialog: DialogInterface?, _: Int -> dialog?.dismiss() })
 

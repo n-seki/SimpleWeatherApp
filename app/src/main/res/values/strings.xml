@@ -7,4 +7,7 @@
     <string name="action_clear">Clear</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="add">Add %s ?</string>
+    <string name="delete">Delete %s ?</string>
+    <string name="clear_all_city">Clear all city?</string>
 </resources>
