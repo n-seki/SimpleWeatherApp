@@ -3,7 +3,6 @@ package seki.com.simpleweatherapp.weather.ui.list
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import seki.com.simpleweatherapp.R
@@ -11,11 +10,7 @@ import seki.com.simpleweatherapp.weather.Weather
 
 class DeleteConfirmDialog: DialogFragment() {
 
-    lateinit var listener: DeleteConfirmDialogListener
-
-    interface DeleteConfirmDialogListener {
-        fun onClickDeleteOk(cityId: String)
-    }
+    lateinit var viewModel: WeatherListViewModel
 
     companion object {
         const val CITY_NAME = "city_name"
@@ -35,8 +30,7 @@ class DeleteConfirmDialog: DialogFragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        listener = (parentFragment as? DeleteConfirmDialogListener) ?:
-                throw IllegalStateException("Parent fragment does not implement Listener!")
+        viewModel = (context as WeatherListActivity).getWeatherListViewModel()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -45,7 +39,7 @@ class DeleteConfirmDialog: DialogFragment() {
 
         return AlertDialog.Builder(activity)
                 .setMessage("${cityName}を削除しますか？")
-                .setPositiveButton(R.string.ok, { _ , _  ->  listener.onClickDeleteOk(cityId) })
+                .setPositiveButton(R.string.ok, { _ , _  ->  viewModel.deleteCity(cityId) })
                 .setNegativeButton(R.string.cancel, { _, _ -> dismiss() })
                 .create()
     }

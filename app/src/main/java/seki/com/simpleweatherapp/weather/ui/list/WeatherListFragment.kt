@@ -15,9 +15,7 @@ package seki.com.simpleweatherapp.weather.ui.list
 
 class WeatherListFragment:
         Fragment(),
-        WeatherListAdapter.ItemClickListener,
-        DeleteConfirmDialog.DeleteConfirmDialogListener,
-        ClearConfirmDialog.ClearConfirmListener {
+        WeatherListAdapter.ItemClickListener {
 
     private lateinit var viewModel: WeatherListViewModel
     private lateinit var binding: FragmentWeatherListBinding
@@ -94,14 +92,6 @@ class WeatherListFragment:
     override fun onItemLongLick(weather: Weather): Boolean {
         DeleteConfirmDialog.newInstance(weather).show(childFragmentManager, "delete_city")
         return true
-    }
-
-    override fun onClickDeleteOk(cityId: String) {
-        viewModel.deleteCity(cityId)
-    }
-
-    override fun onClickClearOk() {
-        viewModel.clear()
     }
 
     companion object {

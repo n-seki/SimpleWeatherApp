@@ -9,11 +9,7 @@ import seki.com.simpleweatherapp.R
 
 class ClearConfirmDialog: DialogFragment() {
 
-    lateinit var listener: ClearConfirmListener
-
-    interface ClearConfirmListener {
-        fun onClickClearOk()
-    }
+    lateinit var viewModel: WeatherListViewModel
 
     companion object {
         fun newInstance() = ClearConfirmDialog()
@@ -21,14 +17,13 @@ class ClearConfirmDialog: DialogFragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        listener = (parentFragment as? ClearConfirmListener) ?:
-                throw IllegalStateException("fragment not implement Listener")
+        viewModel = (context as WeatherListActivity).getWeatherListViewModel()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(activity)
                 .setMessage("登録した地域をすべてクリアしますか？")
-                .setPositiveButton(R.string.ok, { _, _ -> listener.onClickClearOk() })
+                .setPositiveButton(R.string.ok, { _, _ -> viewModel.clear() })
                 .setNegativeButton(R.string.cancel, { _ , _ -> dismiss() })
                 .create()
     }

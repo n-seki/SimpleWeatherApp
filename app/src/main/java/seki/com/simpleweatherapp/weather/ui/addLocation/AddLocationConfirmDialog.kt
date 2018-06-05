@@ -10,11 +10,7 @@ import seki.com.simpleweatherapp.R
 
 class AddLocationConfirmDialog: DialogFragment() {
 
-    lateinit var listener: DialogClickListener
-
-    interface DialogClickListener {
-        fun onClickConfirm(cityId: String)
-    }
+    lateinit var viewModel: AddLocationViewModel
 
     companion object {
         const val CITY_ID = "city_id"
@@ -32,10 +28,9 @@ class AddLocationConfirmDialog: DialogFragment() {
         }
     }
 
-    override fun onAttach(childFragment: Context?) {
+    override fun onAttach(context: Context?) {
         super.onAttach(context)
-        listener = (parentFragment as? DialogClickListener)?:
-                throw IllegalStateException("fragment not implement Listener")
+        viewModel = (context as AddLocationActivity).getAddLocationViewModel()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -44,7 +39,7 @@ class AddLocationConfirmDialog: DialogFragment() {
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
                 .setMessage("${cityName}を追加しますか？")
-                .setPositiveButton(R.string.ok, { _: DialogInterface?, _: Int ->  listener.onClickConfirm(cityId) })
+                .setPositiveButton(R.string.ok, { _: DialogInterface?, _: Int ->  viewModel.addLocation(cityId) })
                 .setNegativeButton(R.string.cancel, { dialog: DialogInterface?, _: Int -> dialog?.dismiss() })
 
         return builder.create()

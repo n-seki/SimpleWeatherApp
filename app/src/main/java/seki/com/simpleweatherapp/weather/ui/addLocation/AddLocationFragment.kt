@@ -13,7 +13,7 @@ import seki.com.simpleweatherapp.R
 import seki.com.simpleweatherapp.databinding.FragmentLocationListBinding
 import seki.com.simpleweatherapp.weather.domain.db.Location
 
-class AddLocationFragment: Fragment(), AddLocationConfirmDialog.DialogClickListener {
+class AddLocationFragment: Fragment() {
 
     private lateinit var locations: Map<String, Location>
 
@@ -101,9 +101,5 @@ class AddLocationFragment: Fragment(), AddLocationConfirmDialog.DialogClickListe
             childList += oneChildList
         }
         return childList
-    }
-
-    override fun onClickConfirm(cityId: String) {
-        viewModel.addLocation(cityId)
     }
 }
