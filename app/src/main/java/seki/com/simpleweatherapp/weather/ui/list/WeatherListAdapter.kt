@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import seki.com.simpleweatherapp.R
 import seki.com.simpleweatherapp.weather.Weather
 
-class WeatherListAdapter(data: List<Weather>, private val listener: ItemClickListener): RecyclerView.Adapter<WViewHolder>() {
+class WeatherListAdapter(private val listener: ItemClickListener): RecyclerView.Adapter<WViewHolder>() {
 
-    var data: List<Weather> = data
+    var data: List<Weather> = listOf()
         set(weathers) {
             field = weathers
             notifyDataSetChanged()

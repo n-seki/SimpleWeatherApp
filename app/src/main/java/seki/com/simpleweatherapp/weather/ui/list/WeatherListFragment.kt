@@ -8,6 +8,7 @@ package seki.com.simpleweatherapp.weather.ui.list
  import android.support.v7.widget.DividerItemDecoration
  import android.support.v7.widget.LinearLayoutManager
  import android.view.*
+ import kotlinx.android.synthetic.main.fragment_weather_list.view.*
  import seki.com.simpleweatherapp.R
  import seki.com.simpleweatherapp.databinding.FragmentWeatherListBinding
  import seki.com.simpleweatherapp.weather.Weather
@@ -31,8 +32,9 @@ class WeatherListFragment:
         binding.weatherList.apply {
             layoutManager = LinearLayoutManager(this@WeatherListFragment.context, LinearLayoutManager.VERTICAL, false)
             addItemDecoration(DividerItemDecoration(this@WeatherListFragment.context, DividerItemDecoration.VERTICAL))
-            adapter = WeatherListAdapter(listOf(), this@WeatherListFragment)
+            adapter = WeatherListAdapter(this@WeatherListFragment)
         }
+        binding.weatherListData = listOf()
 
         return this.binding.root
     }
@@ -68,7 +70,7 @@ class WeatherListFragment:
 
     private fun showWeatherList(list: List<ResponseWrapper<Weather>>?) {
         if (list == null || list.isEmpty()) {
-            (binding.weatherList.adapter as WeatherListAdapter).data = listOf()
+            binding.weatherListData = listOf()
             return
         }
 
@@ -77,7 +79,7 @@ class WeatherListFragment:
                     .filter { response -> response.isSuccess() }
                     .map { response -> response.result ?: throw IllegalStateException("Response result is null!") }
 
-            (binding.weatherList.adapter as WeatherListAdapter).data = weathers
+            binding.weatherListData = weathers
         }
     }
 
