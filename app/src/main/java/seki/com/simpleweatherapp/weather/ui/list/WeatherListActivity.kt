@@ -1,16 +1,12 @@
 package seki.com.simpleweatherapp.weather.ui.list
 
-import android.app.SearchManager
-import android.app.Service
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import seki.com.simpleweatherapp.R
 import seki.com.simpleweatherapp.weather.WeatherApplication
 import seki.com.simpleweatherapp.weather.ui.addLocation.AddLocationActivity
@@ -43,16 +39,6 @@ class WeatherListActivity: AppCompatActivity(), ClearConfirmDialog.ClearConfrimL
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_weather_list, menu)
-
-        val searchManager = getSystemService(Service.SEARCH_SERVICE) as SearchManager
-        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView.isIconified = false
-
-        searchView.setOnQueryTextListener(mSearchListener)
-
-        searchView.onActionViewCollapsed() //hide SearchView editor and clear focus
-
         return true
     }
 
@@ -75,23 +61,8 @@ class WeatherListActivity: AppCompatActivity(), ClearConfirmDialog.ClearConfrimL
         }
     }
 
-    private val mSearchListener = object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?): Boolean {
-            query?.let { search(it) }
-            return true
-        }
-
-        override fun onQueryTextChange(newText: String?): Boolean {
-            return false
-        }
-    }
-
     override fun onClickClearOk() {
         viewModel.clear()
-    }
-
-    fun search(query: String) {
-        Toast.makeText(this, query, Toast.LENGTH_SHORT).show()
     }
 
     fun showDetailScreen(cityId: String) {
