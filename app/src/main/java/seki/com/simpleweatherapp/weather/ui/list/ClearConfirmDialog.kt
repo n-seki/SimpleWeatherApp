@@ -9,9 +9,9 @@ import seki.com.simpleweatherapp.R
 
 class ClearConfirmDialog: DialogFragment() {
 
-    lateinit var listener: ClearConfrimListener
+    lateinit var listener: ClearConfirmListener
 
-    interface ClearConfrimListener {
+    interface ClearConfirmListener {
         fun onClickClearOk()
     }
 
@@ -21,8 +21,8 @@ class ClearConfirmDialog: DialogFragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        listener = (activity as? ClearConfrimListener) ?:
-                throw IllegalStateException("activity not implement Listener")
+        listener = (parentFragment as? ClearConfirmListener) ?:
+                throw IllegalStateException("fragment not implement Listener")
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

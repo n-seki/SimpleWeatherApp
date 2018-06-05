@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.Menu
-import android.view.MenuItem
 import seki.com.simpleweatherapp.R
 import seki.com.simpleweatherapp.weather.WeatherApplication
 import seki.com.simpleweatherapp.weather.ui.addLocation.AddLocationActivity
@@ -14,7 +12,7 @@ import seki.com.simpleweatherapp.weather.ui.detail.WeatherDetailActivity
 import seki.com.simpleweatherapp.weather.util.ViewModelFactory
 import javax.inject.Inject
 
-class WeatherListActivity: AppCompatActivity(), ClearConfirmDialog.ClearConfrimListener {
+class WeatherListActivity: AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -37,32 +35,12 @@ class WeatherListActivity: AppCompatActivity(), ClearConfirmDialog.ClearConfrimL
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_weather_list, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) =
-        when(item.itemId) {
-            R.id.action_clear -> {
-                ClearConfirmDialog.newInstance().show(supportFragmentManager, "clear_confirm")
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_ADD_LOCATION) {
             if (resultCode == AddLocationActivity.ADD_SUCCESS) {
                 viewModel.update()
             }
         }
-    }
-
-    override fun onClickClearOk() {
-        viewModel.clear()
     }
 
     fun showDetailScreen(cityId: String) {

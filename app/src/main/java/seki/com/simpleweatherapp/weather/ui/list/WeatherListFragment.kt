@@ -4,23 +4,29 @@ package seki.com.simpleweatherapp.weather.ui.list
  import android.databinding.DataBindingUtil
  import android.os.Bundle
  import android.support.design.widget.FloatingActionButton
- import android.support.design.widget.Snackbar
  import android.support.v4.app.Fragment
  import android.support.v7.widget.DividerItemDecoration
  import android.support.v7.widget.LinearLayoutManager
- import android.util.Log
- import android.view.LayoutInflater
- import android.view.View
- import android.view.ViewGroup
+ import android.view.*
  import seki.com.simpleweatherapp.R
  import seki.com.simpleweatherapp.databinding.FragmentWeatherListBinding
  import seki.com.simpleweatherapp.weather.Weather
  import seki.com.simpleweatherapp.weather.domain.ResponseWrapper
 
-class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener, DeleteConfirmDialog.DeleteConfirmDialogListener {
+class WeatherListFragment:
+        Fragment(),
+        WeatherListAdapter.ItemClickListener,
+        DeleteConfirmDialog.DeleteConfirmDialogListener,
+        ClearConfirmDialog.ClearConfirmListener {
 
     private lateinit var viewModel: WeatherListViewModel
     private lateinit var binding: FragmentWeatherListBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather_list, container, false)
@@ -48,6 +54,19 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener, Del
             setOnClickListener { showAddLocationScreen() }
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_weather_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) =
+            when(item.itemId) {
+                R.id.action_clear -> {
+                    ClearConfirmDialog.newInstance().show(childFragmentManager, "clear_confirm")
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
 
     private fun showWeatherList(list: List<ResponseWrapper<Weather>>?) {
         if (list == null || list.isEmpty()) {
@@ -79,6 +98,10 @@ class WeatherListFragment: Fragment(), WeatherListAdapter.ItemClickListener, Del
 
     override fun onClickDeleteOk(cityId: String) {
         viewModel.deleteCity(cityId)
+    }
+
+    override fun onClickClearOk() {
+        viewModel.clear()
     }
 
     companion object {
