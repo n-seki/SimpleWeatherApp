@@ -8,7 +8,6 @@ package seki.com.simpleweatherapp.weather.ui.list
  import android.support.v7.widget.DividerItemDecoration
  import android.support.v7.widget.LinearLayoutManager
  import android.view.*
- import kotlinx.android.synthetic.main.fragment_weather_list.view.*
  import seki.com.simpleweatherapp.R
  import seki.com.simpleweatherapp.databinding.FragmentWeatherListBinding
  import seki.com.simpleweatherapp.weather.Weather
