@@ -25,24 +25,22 @@ class WeatherListViewModel @Inject constructor(private val repo: WeatherReposito
             return resultListDataList
         }
 
-        load(cities, mediator, weathers, resultListDataList, 0)
+        load(cities, mediator, weathers, resultListDataList)
         return resultListDataList
     }
 
     private fun load(cities: List<String>,
                      mediator: MediatorLiveData<ResponseWrapper<Weather>>,
                      weathers: MutableList<ResponseWrapper<Weather>>,
-                     resultListDataList: MutableLiveData<List<ResponseWrapper<Weather>>>,
-                     position: Int) {
+                     resultListDataList: MutableLiveData<List<ResponseWrapper<Weather>>>) {
 
-        val city = cities[position]
+        val city = cities.first()
         val weatherResponse = repo.getSingleWeather(city)
         mediator.observeForever { }
-        mediator.addSource(weatherResponse) { response -> nextLoadOrPost(response, position, cities, mediator, weathers, resultListDataList) }
+        mediator.addSource(weatherResponse) { response -> nextLoadOrPost(response, cities.drop(1), mediator, weathers, resultListDataList) }
     }
 
     private fun nextLoadOrPost(weatherResponse: ResponseWrapper<Weather>?,
-                               position: Int,
                                cities: List<String>,
                                mediator: MediatorLiveData<ResponseWrapper<Weather>>,
                                weathers: MutableList<ResponseWrapper<Weather>>,
@@ -55,12 +53,12 @@ class WeatherListViewModel @Inject constructor(private val repo: WeatherReposito
 
         weathers.add(weatherResponse)
 
-        if (position + 1 == cities.size) {
+        if (cities.isEmpty()) {
             resultListDataList.postValue(weathers)
             return
         }
 
-        load(cities, mediator, weathers, resultListDataList, position + 1)
+        load(cities, mediator, weathers, resultListDataList)
     }
 
     fun update() {
