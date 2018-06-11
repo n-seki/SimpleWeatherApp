@@ -14,7 +14,8 @@ class AddLocationViewModel @Inject constructor(private val repo: WeatherReposito
         UPDATE
     }
 
-    val status: MutableLiveData<Status> = MutableLiveData()
+    private val _status: MutableLiveData<Status> = MutableLiveData()
+    val status: LiveData<Status> = _status
 
     fun getLocationList(): LiveData<List<Location>> {
         return repo.locationListLiveData
@@ -23,7 +24,7 @@ class AddLocationViewModel @Inject constructor(private val repo: WeatherReposito
     fun addLocation(cityId: String) {
         repo.addLocation(cityId, object : WeatherRepository.CompleteLocationSelectedStatusChanged {
             override fun onCompleteChanged() {
-                status.postValue(Status.UPDATE)
+                _status.postValue(Status.UPDATE)
             }
         })
     }
